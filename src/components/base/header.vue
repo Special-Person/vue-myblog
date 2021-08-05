@@ -3,10 +3,18 @@
         <div class="container clearfix">
             <router-link to="/" class="title">我的个人博客 | 技术博客</router-link>
             <ul class="menu">
-                <li><router-link to="/">首页</router-link></li>
-                <li><router-link to="/sitemap">地图</router-link></li>
-                <li><router-link to="/">关于</router-link></li>
-                <li><router-link to="/">留言</router-link></li>
+                <li>
+                    <router-link to="/">首页</router-link>
+                </li>
+                <li>
+                    <router-link to="/sitemap">地图</router-link>
+                </li>
+                <li>
+                    <router-link to="/about">关于</router-link>
+                </li>
+                <li>
+                    <router-link to="/guestbook">留言</router-link>
+                </li>
             </ul>
             <div class="search-bar">
                 <input type="text" placeholder="输入关键字查找"/>
@@ -50,6 +58,10 @@
     .menu {
         float: left;
         margin-left: 15px;
+
+        .router_active {
+            color: var(--size-color-hover);
+        }
 
         li {
             display: inline-block;

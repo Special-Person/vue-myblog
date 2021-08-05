@@ -1,23 +1,23 @@
 <template>
     <div class="">
         <div class="right_module">
-            <p class="module_title">随机标签云</p>
+            <p class="module_title" :style="randomColor()">随机标签云</p>
             <div class="module_content">
-                <router-link v-for="item in 20" to="/">asd</router-link>
+                <router-link v-for="item in tags" to="/" :style="randomTags()">{{item}}</router-link>
             </div>
         </div>
         <div class="right_module">
-            <p class="module_title">最近热门</p>
+            <p class="module_title" :style="randomColor()">最近热门</p>
             <ul class="module_list">
-                <li v-for="item in 3">
-                    <router-link to="/">查看服务器{{item}}</router-link>
+                <li v-for="item in titleList">
+                    <router-link :to="item.link">{{item.title}}</router-link>
                 </li>
             </ul>
         </div>
         <div class="right_module">
-            <p class="module_title">最新评论</p>
+            <p class="module_title" :style="randomColor()">最新评论</p>
             <ul class="module_comment">
-                <li class="comment" v-for="item in 3">
+                <li class="comment" v-for="item in 0">
                     <p class="comment_name">代码狗<span>[三天前]</span></p>
                     <p class="comment_discribe">
                         <router-link to="/">抱歉，由于种种原因，本站不再链接至贵站</router-link>
@@ -26,10 +26,10 @@
             </ul>
         </div>
         <div class="right_module">
-            <p class="module_title">友情链接</p>
+            <p class="module_title" :style="randomColor()">友情链接</p>
             <ul class="module_link clearfix">
-                <li v-for="item in 3">
-                    <a href="/">IT 训练</a>
+                <li v-for="item in friendShip">
+                    <a :href="item.link">{{item.title}}</a>
                 </li>
             </ul>
         </div>
@@ -39,8 +39,57 @@
 <script>
     export default {
         data() {
-            return {};
+            return {
+                randomTitleColor: `color: rgb(50,60,70)`,
+                tags: ["拉登", "指针", "php分页", "seo", "telnet", "selenium", "win7", "dedecms", "SpaceShuttleMission", "数据结构", "git", "E6", "外链", "C语言", "nginx", "Sunshine Girl", "css+div", "C++", "mysql", "cpanel", "音乐", "php", "python", "搞笑", "独立博客", "Rewrite", "DCS黑鲨", "vagrant", "蛋疼", "分区", "模拟航天飞机", "个人博客", "session", "灯泡姑娘", "wordpress", "mac", "laravel", "五笔", "伤不起", "博客优化", "摄像头", "树莓派", "模拟飞行", "游戏", "博客"],
+                titleList: [
+                    {title: "使用码云git的webhook实现生产环境代", link: "/"},
+                    {title: "VirtualBox压缩vmdk、vagrant打包b", link: "/"},
+                    {title: "初烧盲狙一条铁三角e40", link: "/"},
+                    {title: "树莓派安装homebridge小记", link: "/"},
+                    {title: "【更新】PC端微信(2.6.7.57)防撤回", link: "/"},
+                    {title: "注册谷歌时提示\"此电话号码无法用于进", link: "/"}
+                ],
+                friendShip: [
+                    {title: "挨踢茶馆", link: "/"},
+                    {title: "佛布朗斯基", link: "/"},
+                    {title: "kTWO博客", link: "/"},
+                    {title: "Lizenghai's Blog", link: "/"},
+                    {title: "个人博客", link: "/"},
+                    {title: "Skymoon", link: "/"},
+                    {title: "网讯IT资讯", link: "/"},
+                    {title: "docker技术网站", link: "/"},
+                    {title: "Yusure的个人博客", link: "/"},
+                    {title: "小张个人博客", link: "/"},
+                    {title: "柚子工具", link: "/"},
+                    {title: "陆鉴鑫的博客", link: "/"},
+                    {title: "薛才杰个人博客", link: "/"},
+                    {title: "TENNFY", link: "/"},
+                    {title: "萌新blog", link: "/"}
+                ]
+            };
+        },
+        computed: {
+            randomTags: () => () => {
+                let color = "#";
+                for (let i = 0; i < 6; i++) {
+                    color += Math.floor(Math.random() * 16).toString(16);
+                }
+
+                let fontsize = Math.floor(Math.random() * (18 - 12 + 1)) + 12;
+
+                return `color: ${color};font-size: ${fontsize}px;`;
+            },
+            randomColor: () => () => {
+                let colorArr = [
+                    Math.floor(Math.random() * (210 - 50 + 1)) + 50,
+                    Math.floor(Math.random() * (210 - 50 + 1)) + 50,
+                    Math.floor(Math.random() * (210 - 50 + 1)) + 50
+                ];
+                return "color: rgb(" + colorArr.join(",") + ")";
+            }
         }
+
     };
 </script>
 
@@ -56,8 +105,7 @@
 
         .module_title {
             padding: 10px 15px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
+            border-radius: 10px;
             background-color: #212121;
         }
 
@@ -152,6 +200,7 @@
                     text-align: left;
                     width: 100%;
                     font-size: 14px;
+
                     &:hover {
                         color: var(--size-color-hover);
                     }
