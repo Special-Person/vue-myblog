@@ -90,4 +90,33 @@
         width: 33%;
         box-sizing: border-box;
     }
+
+    .dazzle_color {
+        color: rgb(50, 50, 50);
+        animation: dazzleColor ease-in-out 20s infinite;
+    }
+
+    @keyframes dazzleColor {
+        0% {
+            color: rgb(50, 50, 50);
+        }
+        16% {
+            color: rgb(50, 210, 50);
+        }
+        32% {
+            color: rgb(50, 210, 210);
+        }
+        48% {
+            color: rgb(210, 210, 210);
+        }
+        64% {
+            color: rgb(210, 50, 210);
+        }
+        80% {
+            color: rgb(210, 50, 50);
+        }
+        100% {
+            color: rgb(50, 50, 50);
+        }
+    }
 </style>

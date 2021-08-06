@@ -195,7 +195,7 @@
             max-height: 300px;
         }
 
-        [type="text"]{
+        [type="text"] {
             &:focus {
                 border-color: var(--size-color-hover);
             }
@@ -210,10 +210,11 @@
             border-color: var(--size-color-hover);
         }
 
-        [name="username"]{
+        [name="username"] {
             width: 33%;
         }
-        [name="email"]{
+
+        [name="email"] {
             width: 57%;
         }
     }

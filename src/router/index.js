@@ -15,27 +15,27 @@ export default new VueRouter({
             component: Home
         },
         {
-            path: '/sitemap',
+            path: "/sitemap",
             name: "Sitemap",
             component: () => import("@/views/Sitemap.vue")
         },
         {
-            path: '/about',
+            path: "/about",
             name: "About",
             component: () => import("@/views/About.vue")
         },
         {
-            path: '/guestbook',
+            path: "/guestbook",
             name: "GuestBook",
             component: () => import("@/views/Guestbook.vue")
         },
         {
-            path: '/editorBlog',
+            path: "/editorBlog",
             name: "editorBlog",
             component: () => import("@/views/editorBlog.vue")
         },
         {
-            path: '/editorEveryDay',
+            path: "/editorEveryDay",
             name: "editorEveryDay",
             component: () => import("@/views/editorEveryDay.vue")
         },

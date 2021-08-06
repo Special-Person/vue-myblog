@@ -1,13 +1,14 @@
 <template>
     <div class="">
         <div class="right_module">
-            <p class="module_title" :style="randomColor()">随机标签云</p>
+            <p class="module_title dazzle_color" style="animation-delay: 1s">随机标签云</p>
             <div class="module_content">
-                <router-link v-for="item in tags" to="/" :style="randomTags()">{{item}}</router-link>
+                <router-link :key="index" v-for="(item, index) in tags" to="/" :style="randomTags()">{{item}}
+                </router-link>
             </div>
         </div>
         <div class="right_module">
-            <p class="module_title" :style="randomColor()">最近热门</p>
+            <p class="module_title dazzle_color" style="animation-delay: 2s">最近热门</p>
             <ul class="module_list">
                 <li v-for="item in titleList">
                     <router-link :to="item.link">{{item.title}}</router-link>
@@ -15,7 +16,7 @@
             </ul>
         </div>
         <div class="right_module">
-            <p class="module_title" :style="randomColor()">最新评论</p>
+            <p class="module_title dazzle_color" style="animation-delay: 3s">最新评论</p>
             <ul class="module_comment">
                 <li class="comment" v-for="item in 0">
                     <p class="comment_name">代码狗<span>[三天前]</span></p>
@@ -26,7 +27,7 @@
             </ul>
         </div>
         <div class="right_module">
-            <p class="module_title" :style="randomColor()">友情链接</p>
+            <p class="module_title dazzle_color" style="animation-delay: 4s">友情链接</p>
             <ul class="module_link clearfix">
                 <li v-for="item in friendShip">
                     <a :href="item.link">{{item.title}}</a>
@@ -79,14 +80,6 @@
                 let fontsize = Math.floor(Math.random() * (18 - 12 + 1)) + 12;
 
                 return `color: ${color};font-size: ${fontsize}px;`;
-            },
-            randomColor: () => () => {
-                let colorArr = [
-                    Math.floor(Math.random() * (210 - 50 + 1)) + 50,
-                    Math.floor(Math.random() * (210 - 50 + 1)) + 50,
-                    Math.floor(Math.random() * (210 - 50 + 1)) + 50
-                ];
-                return "color: rgb(" + colorArr.join(",") + ")";
             }
         }
 
