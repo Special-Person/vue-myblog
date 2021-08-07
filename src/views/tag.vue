@@ -1,9 +1,5 @@
 <template>
-    <div>
-        <div class="every_day">
-            <p class="dazzle_color">每日一句 <i class="iconfont icon-laba"/></p>
-            <p v-html="quote"/>
-        </div>
+    <div class="tag">
         <div class="article_list">
             <div class="article" v-for="item in articleList" :key="item.id">
                 <span class="article_title">
@@ -12,7 +8,7 @@
                 <div class="article_content" v-html="item.content"/>
                 <div class="article_foot">
                     发布于 {{dateFormat(item.ctime)}} | 浏览：{{item.views}} | Tags：
-                    <router-link :to="'/tag/' + tag" v-for="tag in item.tags">{{tag}}</router-link>
+                    <router-link :to="'/tag/'+tag" v-for="tag in item.tags">{{tag}}</router-link>
                 </div>
             </div>
         </div>
@@ -22,13 +18,14 @@
 </template>
 
 <script>
-    import displayPage from "@/components/displayPage";
+    import DisplayPage from "../components/displayPage";
     import {get} from "../api";
 
     export default {
+        name: "tag",
+        components: {DisplayPage},
         data() {
             return {
-                quote: "",
                 page: 1,
                 pageSize: 10,
                 pageTotalCount: 0,
@@ -36,14 +33,39 @@
             };
         },
         created() {
-            this.queryBlogByPage(this.page);
-
-            //  请求every_day数据
-            get.queryEveryDay().then(res => this.quote = res.data && res.data[0].content || "");
-            get.queryBlogPageTotalCount().then(res => this.pageTotalCount = res.data && res.data || 0);
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+            this.queryTagByTags(this.page);
         },
         methods: {
+            handleClick(curIndex) {
+                this.queryTagByTags(curIndex);
+            },
+            queryTagByTags(page) {
+                get.queryTagByTags({
+                    tag: this.$route.params.id,
+                    page: (page - 1),
+                    pageSize: this.pageSize
+                }).then(res => {
+                    let data = res.data && res.data || [];
+                    this.cutOut(data);
+                    this.articleList = data;
+                });
+            },
+            // 格式化文章时间
+            dateFormat(str) {
+                let oDate = new Date(str * 1000),
+                    oYear = oDate.getFullYear(),
+                    oMonth = oDate.getMonth() + 1,
+                    oDay = oDate.getDate();
 
+                oMonth = oMonth < 10 ? "0" + oMonth : oMonth;
+                oDay = oDay < 10 ? "0" + oDay : oDay;
+
+                return oYear + "-" + oMonth + "-" + oDay;
+            },
             cutOut(data) {
                 let oDiv = document.createElement("div");
                 // 截断处理， 剔除图片展示
@@ -64,68 +86,13 @@
                 });
 
                 oDiv = null;
-            },
-            // 格式化文章时间
-            dateFormat(str) {
-                let oDate = new Date(str * 1000),
-                    oYear = oDate.getFullYear(),
-                    oMonth = oDate.getMonth() + 1,
-                    oDay = oDate.getDate();
-
-                oMonth = oMonth < 10 ? "0" + oMonth : oMonth;
-                oDay = oDay < 10 ? "0" + oDay : oDay;
-
-                return oYear + "-" + oMonth + "-" + oDay;
-            },
-            handleClick(curIndex) {
-                this.queryBlogByPage(curIndex);
-            },
-            queryBlogByPage(page) {
-                // 请求所有文章
-
-                get.queryBlogByPage({
-                    page: (page - 1),
-                    pageSize: this.pageSize
-                }).then(res => {
-                    let data = res.data && res.data || [];
-                    this.cutOut(data);
-                    this.articleList = data;
-                });
             }
-        },
-        components: {
-            displayPage
         }
     };
 </script>
 
-
 <style lang="less" scoped>
     @import "../assets/base";
-
-    .every_day {
-        background-color: #fff;
-        width: 100%;
-        text-align: left;
-        border-radius: 5px;
-        box-shadow: 2px 2px 5px #888;
-        padding: 10px 15px;
-        box-sizing: border-box;
-
-        p {
-            font-size: 16px;
-            .less-text-exceeded();
-
-            &:not(:first-child) {
-                margin-top: 5px;
-            }
-
-            .pull-right {
-                float: right;
-            }
-        }
-
-    }
 
     .article {
         display: inline-block;
@@ -175,6 +142,4 @@
             }
         }
     }
-
-
 </style>

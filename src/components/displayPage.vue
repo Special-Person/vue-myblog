@@ -142,9 +142,9 @@
         },
         data() {
             return {
-                index: this.pageIndex, //当前页码
-                limit: this.pageSize, //每页显示条数
-                size: this.total, //总记录数
+                index : this.pageIndex, //当前页码
+                limit : this.pageSize, //每页显示条数
+                size : this.total || 1, //总记录数
                 showPrevMore: false,
                 showNextMore: false
             };
@@ -153,6 +153,15 @@
             index(val) {
                 this.$emit("handleClick", val);
                 window.scrollTo(document.body.scrollHeight || 0, 0);
+            },
+            pageIndex(val) {
+                this.index = val || 1
+            },
+            pageSize(val) {
+                this.limit = val || 10
+            },
+            total(val) {
+                this.size = val || 1
             }
         }
     };

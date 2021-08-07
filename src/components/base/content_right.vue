@@ -87,7 +87,7 @@
 </script>
 
 <style lang="less" scoped>
-
+    @import "../../assets/base";
 
     .right_module {
         text-align: left;
@@ -100,6 +100,7 @@
             padding: 10px 15px;
             border-radius: 10px;
             background-color: #212121;
+            .less-text-overflow-eclipse();
         }
 
         .module_content {
@@ -124,6 +125,7 @@
                 padding: 5px 15px;
                 height: 30px;
                 line-height: 30px;
+                .less-text-overflow-eclipse();
 
                 &:not(:last-child) {
                     border-bottom: 1px dashed #444;
@@ -143,6 +145,7 @@
         .module_comment {
             .comment {
                 padding: 5px 15px;
+                .less-text-overflow-eclipse();
 
                 &:not(:last-child) {
                     border-bottom: 1px dashed #444;
@@ -184,9 +187,7 @@
                 border-bottom: 1px dashed #444;
                 padding: 0 15px;
                 box-sizing: border-box;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
+                .less-text-overflow-eclipse();
 
                 a {
                     color: var(--size-color);

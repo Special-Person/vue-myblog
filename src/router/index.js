@@ -4,7 +4,7 @@ import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
+const router = new VueRouter({
     mode: "history",
     base: process.env.BASE_URL,
     linkExactActiveClass: "router_active",
@@ -40,8 +40,19 @@ export default new VueRouter({
             component: () => import("@/views/editorEveryDay.vue")
         },
         {
+            path: "/blogDetail/:id",
+            name: "blogDetail",
+            component: () => import("@/views/blogDetail.vue")
+        },
+        {
+            path: "/tag/:id",
+            name: "tag",
+            component: () => import("@/views/tag.vue")
+        },
+        {
             path: "*",
             redirect: {name: "Home"}
         }
-    ]
+    ],
 });
+export default router;
