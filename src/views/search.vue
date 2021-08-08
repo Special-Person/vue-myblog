@@ -1,5 +1,5 @@
 <template>
-    <div class="tag">
+    <div class="search">
         <div class="article_list">
             <div class="article" v-for="item in articleList" :key="item.id">
                 <span class="article_title">
@@ -23,7 +23,7 @@
     import {scrollTop} from "../assets/util";
 
     export default {
-        name: "tag",
+        name: "search",
         components: {DisplayPage},
         data() {
             return {
@@ -35,15 +35,15 @@
         },
         created() {
             scrollTop();
-            this.queryTagByTags(this.page);
+            this.queryKeyWord(this.page);
         },
         methods: {
             handleClick(curIndex) {
-                this.queryTagByTags(curIndex);
+                this.queryKeyWord(curIndex);
             },
-            queryTagByTags(page) {
-                get.queryTagByTags({
-                    tag: this.$route.params.id,
+            queryKeyWord(page) {
+                get.queryKeyWord({
+                    keyWord: this.$route.params.id,
                     page: (page - 1),
                     pageSize: this.pageSize
                 }).then(res => {

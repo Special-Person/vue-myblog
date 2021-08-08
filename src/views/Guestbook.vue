@@ -13,11 +13,15 @@
 <script>
     import Message from "@/components/message";
     import {post} from "../api";
+    import {scrollTop} from "../assets/util";
 
     export default {
         name: "Guestbook",
         components: {
             Message
+        },
+        created() {
+            scrollTop();
         },
         methods: {
             handleClick(val){

@@ -6,13 +6,13 @@ const instance = axios.create({
 
 // 请求前拦截
 instance.interceptors.request.use(config => {
-    console.log(config);
+    // console.log(config);
     return config;
 }, err => Promise.reject(err));
 
 // 返回结果拦截
 instance.interceptors.response.use(result => {
-    console.log(result);
+    // console.log(result);
     return result.data;
 }, err => Promise.reject(err));
 

@@ -50,6 +50,11 @@ const router = new VueRouter({
             component: () => import("@/views/tag.vue")
         },
         {
+            path: "/search/:id",
+            name: "search",
+            component: () => import("@/views/search.vue")
+        },
+        {
             path: "*",
             redirect: {name: "Home"}
         }

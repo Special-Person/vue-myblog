@@ -12,7 +12,7 @@
                 <div class="article_content" v-html="item.content"/>
                 <div class="article_foot">
                     发布于 {{dateFormat(item.ctime)}} | 浏览：{{item.views}} | Tags：
-                    <router-link :to="'/tag/' + tag" v-for="tag in item.tags">{{tag}}</router-link>
+                    <router-link :to="'/tag/' + tag" v-for="tag in item.tags" :key="tag+item.id">{{tag}}</router-link>
                 </div>
             </div>
         </div>
@@ -41,9 +41,9 @@
             //  请求every_day数据
             get.queryEveryDay().then(res => this.quote = res.data && res.data[0].content || "");
             get.queryBlogPageTotalCount().then(res => this.pageTotalCount = res.data && res.data || 0);
+
         },
         methods: {
-
             cutOut(data) {
                 let oDiv = document.createElement("div");
                 // 截断处理， 剔除图片展示

@@ -84,25 +84,22 @@
         methods: {
             // 翻页评论
             handleClick(curIndex) {
-                this.queryComments(curIndex)
+                this.queryComments(curIndex);
             },
             // 点击跳到最底下评论处
             ClickReply(commentId, username) {
-                window.scrollTo({
-                    top: this.$refs.respond.offsetTop + 20,
-                    behavior: "smooth"
-                });
+                window.scrollTo({top: this.$refs.respond.offsetTop + 20, behavior: "smooth"});
                 this.$refs.username.focus();
                 this.reply = commentId;
                 this.replyName = username;
             },
             // 请求总条数
-            queryCommentsCountByBlodId(){
+            queryCommentsCountByBlodId() {
                 get.queryCommentsCountByBlodId({
                     blog_id: this.msgId
                 }).then(res => {
                     this.pageTotalCount = res.data.count;
-                })
+                });
             },
             queryComments(page) {
                 get.queryCommentsByBlodId({

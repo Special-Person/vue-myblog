@@ -39,6 +39,8 @@
 </template>
 
 <script>
+    import {scrollTop} from "../assets/util";
+
     export default {
         name: "displayPage",
         //通过props来接受从父组件传递过来的值
@@ -152,7 +154,7 @@
         watch: {
             index(val) {
                 this.$emit("handleClick", val);
-                window.scrollTo(document.body.scrollHeight || 0, 0);
+                scrollTop();
             },
             pageIndex(val) {
                 this.index = val || 1

@@ -13,23 +13,48 @@
             </p>
         </div>
         <div class="about_message">
-            <message/>
+            <message @handleClick="handleClick" :msgId=-1 />
         </div>
     </div>
 </template>
 
 <script>
     import Message from "@/components/message";
+    import {post} from "../api";
+    import {scrollTop} from "../assets/util";
 
     export default {
         name: "About",
         components: {
             Message
+        },
+        created() {
+            scrollTop();
+        },
+        methods: {
+            handleClick(val) {
+                // 发表评论
+                post.addComment({
+                    blog_id: -1,
+                    username: val.username,
+                    comments: val.content,
+                    email: val.email,
+                    parent: val.reply,
+                    parentName: val.replyName
+                }).then(res => {
+                    if(res.status.toString() === "success" ){
+                        alert("评论成功");
+                        this.$router.go(0);
+                    }
+                });
+            }
         }
     };
 </script>
 
 <style lang="less" scoped>
+    @import "../assets/base";
+
     .about_me {
         background-color: #fff;
         width: 100%;
@@ -50,6 +75,7 @@
             padding: 10px 0;
             font-size: 16px;
             color: #333;
+            .less-text-exceeded();
 
             a {
                 color: var(--size-color-hover);

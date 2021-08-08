@@ -98,6 +98,30 @@ export const get = {
         method: "get",
         params
     }),
+
+    addViews: (params = {}) => axios({
+        url: "/api/addViews",
+        method: "get",
+        params
+    }),
+
+    queryHotBlog: (params = {}) => axios({
+        url: "/api/queryHotBlog",
+        method: "get",
+        params
+    }),
+
+    queryNewComments: (params = {}) => axios({
+        url: "/api/queryNewComments",
+        method: "get",
+        params
+    }),
+
+    queryKeyWord: (params = {}) => axios({
+        url: "/api/queryKeyWord",
+        method: "get",
+        params
+    }),
 };
 
 export const post = {

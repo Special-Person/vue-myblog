@@ -4,7 +4,7 @@
             <div class="blog_title">{{title}}</div>
             <div class="blog_msg">
                 分类:
-                <router-link to="/search" v-for="item in tags" class="blog_tag">{{item}}</router-link>
+                <router-link to="/search" v-for="item in tags" class="blog_tag" :key="item.id">{{item}}</router-link>
                 发布于: {{ctime}}
                 浏览: {{views}}
             </div>
@@ -17,6 +17,7 @@
 <script>
     import Message from "../components/message";
     import {get, post} from "../api";
+    import {scrollTop} from "../assets/util";
 
     export default {
         name: "blog_detail",
@@ -30,7 +31,22 @@
                 views: ""
             };
         },
+        beforeDestroy() {
+            clearTimeout(this.timer);
+            this.timer = null;
+        },
         created() {
+            scrollTop();
+            // 进入页面三秒 算真实浏览
+            this.timer = setTimeout(() => {
+                get.addViews({
+                    id: this.$route.params.id
+                }).then(res => {
+                    console.log(res);
+                });
+            }, 3000);
+
+            // 查找博客内容
             get.queryBlog({mgsId: this.$route.params.id})
                 .then(res => {
                     const {

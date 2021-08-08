@@ -22,6 +22,7 @@
 
 <script>
     import {get} from "../api";
+    import {scrollTop} from "../assets/util";
 
     export default {
         name: "Sitemap",
@@ -32,10 +33,7 @@
             };
         },
         created() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
+            scrollTop();
             get.queryAllBlog().then(res => {
                 this.news = res.data;
             });

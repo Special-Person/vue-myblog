@@ -3,7 +3,7 @@
         <MyHeader/>
         <div class="content">
             <div class="content_left">
-                <router-view/>
+                <router-view :key="randomId"/>
             </div>
             <div class="content_right">
                 <my-content-right/>
@@ -23,6 +23,13 @@
             MyHeader,
             MyFooter,
             MyContentRight
+        },
+        computed:{
+            randomId () {
+                // 路由id更改 刷新页面
+                // 通过加个动态变化的参数，让界面可以触发钩子进行刷新
+                return this.$route.fullPath + new Date()
+            }
         }
     };
 </script>

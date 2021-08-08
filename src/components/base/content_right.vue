@@ -3,25 +3,26 @@
         <div class="right_module">
             <p class="module_title dazzle_color" style="animation-delay: 1s">随机标签云</p>
             <div class="module_content">
-                <router-link :key="index" v-for="(item, index) in tags" to="/" :style="randomTags()">{{item}}
+                <router-link :key="item.id" v-for="item in tags" :to="'/tag/' + item.tag" :style="randomTags()">
+                    {{item.tag}}
                 </router-link>
             </div>
         </div>
         <div class="right_module">
             <p class="module_title dazzle_color" style="animation-delay: 2s">最近热门</p>
             <ul class="module_list">
-                <li v-for="item in titleList">
-                    <router-link :to="item.link">{{item.title}}</router-link>
+                <li v-for="item in titleList" :key="item.id">
+                    <router-link :to="'/blogDetail/'+item.id">{{item.title}}</router-link>
                 </li>
             </ul>
         </div>
         <div class="right_module">
             <p class="module_title dazzle_color" style="animation-delay: 3s">最新评论</p>
             <ul class="module_comment">
-                <li class="comment" v-for="item in 0">
-                    <p class="comment_name">代码狗<span>[三天前]</span></p>
+                <li class="comment" v-for="item in newComments">
+                    <p class="comment_name">{{item.username}}<span>[{{item.ctime}}]</span></p>
                     <p class="comment_discribe">
-                        <router-link to="/">抱歉，由于种种原因，本站不再链接至贵站</router-link>
+                        <router-link :to="calBlogId(item.blog_id)">{{item.comments}}</router-link>
                     </p>
                 </li>
             </ul>
@@ -38,47 +39,60 @@
 </template>
 
 <script>
+    import {get} from "../../api";
+
     export default {
         data() {
             return {
                 randomTitleColor: `color: rgb(50,60,70)`,
-                tags: ["拉登", "指针", "php分页", "seo", "telnet", "selenium", "win7", "dedecms", "SpaceShuttleMission", "数据结构", "git", "E6", "外链", "C语言", "nginx", "Sunshine Girl", "css+div", "C++", "mysql", "cpanel", "音乐", "php", "python", "搞笑", "独立博客", "Rewrite", "DCS黑鲨", "vagrant", "蛋疼", "分区", "模拟航天飞机", "个人博客", "session", "灯泡姑娘", "wordpress", "mac", "laravel", "五笔", "伤不起", "博客优化", "摄像头", "树莓派", "模拟飞行", "游戏", "博客"],
-                titleList: [
-                    {title: "使用码云git的webhook实现生产环境代", link: "/"},
-                    {title: "VirtualBox压缩vmdk、vagrant打包b", link: "/"},
-                    {title: "初烧盲狙一条铁三角e40", link: "/"},
-                    {title: "树莓派安装homebridge小记", link: "/"},
-                    {title: "【更新】PC端微信(2.6.7.57)防撤回", link: "/"},
-                    {title: "注册谷歌时提示\"此电话号码无法用于进", link: "/"}
-                ],
-                friendShip: [
-                    {title: "挨踢茶馆", link: "/"},
-                    {title: "佛布朗斯基", link: "/"},
-                    {title: "kTWO博客", link: "/"},
-                    {title: "Lizenghai's Blog", link: "/"},
-                    {title: "个人博客", link: "/"},
-                    {title: "Skymoon", link: "/"},
-                    {title: "网讯IT资讯", link: "/"},
-                    {title: "docker技术网站", link: "/"},
-                    {title: "Yusure的个人博客", link: "/"},
-                    {title: "小张个人博客", link: "/"},
-                    {title: "柚子工具", link: "/"},
-                    {title: "陆鉴鑫的博客", link: "/"},
-                    {title: "薛才杰个人博客", link: "/"},
-                    {title: "TENNFY", link: "/"},
-                    {title: "萌新blog", link: "/"}
-                ]
+                tags: [],
+                titleList: [],
+                newComments: [],
+                friendShip: []
             };
+        },
+        created() {
+
+            get.queryNewComments().then(res => {
+                this.newComments = res.data;
+            });
+            get.queryAllTag().then(res => {
+                this.tags = this.shuffle(res.data);
+            });
+            get.queryHotBlog().then(res => {
+                this.titleList = res.data;
+            });
+        },
+        methods: {
+            // 打乱数组
+            shuffle(array) {
+                let m = array.length;
+                while (m) {
+                    let i = Math.floor(Math.random() * m--);
+                    [array[m], array[i]] = [array[i], array[m]];
+                }
+                return array;
+            },
+            calBlogId: (blogId) => {
+                if(blogId === -1){
+                    // 关于页
+                    return "/about"
+                } else if(blogId === -2){
+                    // 留言页
+                    return "/guestbook";
+                } else if(blogId > -1){
+                    // 博客详情页
+                    return "/blogDetail/" + blogId
+                } else {
+                    return "/"
+                }
+            }
         },
         computed: {
             randomTags: () => () => {
-                let color = "#";
-                for (let i = 0; i < 6; i++) {
-                    color += Math.floor(Math.random() * 16).toString(16);
-                }
-
-                let fontsize = Math.floor(Math.random() * (18 - 12 + 1)) + 12;
-
+                let randomColor = () => ((Math.random() * 160) >> 0) + 50;
+                let color = `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`;
+                let fontsize = Math.floor(Math.random() * 7) + 12;
                 return `color: ${color};font-size: ${fontsize}px;`;
             }
         }

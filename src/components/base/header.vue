@@ -17,16 +17,28 @@
                 </li>
             </ul>
             <div class="search-bar">
-                <input type="text" placeholder="输入关键字查找"/>
-                <button>搜索</button>
+                <input type="text" v-model="keyWord" @keyup.enter="searchKeyWord" placeholder="输入关键字查找"/>
+                <button @click="searchKeyWord">搜索</button>
             </div>
         </div>
     </header>
 </template>
 
 <script>
+    import {get} from "../../api";
+
     export default {
-        name: "myheader"
+        name: "myheader",
+        data(){
+            return {
+                keyWord: ""
+            }
+        },
+        methods: {
+            searchKeyWord(){
+                this.$router.push("/search/" + this.keyWord)
+            }
+        }
     };
 </script>
 
