@@ -1,6 +1,6 @@
 # vue-myblog
 
-#### ![image](https://github.com/Special-Person/vue-myblog/blob/master/blog.png)
+#### ![](./blog.png)
 
 ## Project setup
 ```
