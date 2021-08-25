@@ -1,6 +1,6 @@
 # vue-myblog
 
-#### ![在线预览地址](https://github.com/Special-Person/vue-myblog/blob/master/blog.png)
+#### ![image](https://github.com/Special-Person/vue-myblog/blob/master/blog.png)
 
 ## Project setup
 ```
